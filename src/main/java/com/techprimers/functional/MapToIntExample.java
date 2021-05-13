@@ -15,7 +15,7 @@ public class MapToIntExample {
 		System.out.println("\nFunctional style using lambda expression:");
 		int sum1 = users.stream().mapToInt(user -> user.getAge()).sum();
 		System.out.println("Sum: " + sum1);
-		
+
 		System.out.println("\nFunctional style using method reference:");
 		int sum2 = users.stream().mapToInt(User::getAge).sum();
 		System.out.println("Sum: " + sum2);

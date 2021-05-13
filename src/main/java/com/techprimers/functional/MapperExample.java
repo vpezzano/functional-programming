@@ -10,7 +10,7 @@ public class MapperExample {
 	public static void main(String[] args) {
 		List<String> names = Arrays.asList("Peter", "Sam", "Greg", "Ryan");
 
-		System.out.println("\nImperative style:");
+		System.out.println("Imperative style:");
 		for (String name : names) {
 			if (!name.equals("Sam")) {
 				User user = new User(name);
@@ -33,7 +33,7 @@ public class MapperExample {
 		names.stream().filter(MapperExample::isNotSam).map(User::new).forEach(System.out::println);
 
 		System.out.println("\nFunctional style using constructor reference and method reference:");
-		List<User> users = names.stream().filter(MapperExample::isNotSam).map(User::new).collect(Collectors.toList()); // collect is a terminal operation
+		List<User> users = names.stream().filter(MapperExample::isNotSam).map(User::new).collect(Collectors.toList());
 		System.out.println("Users: " + users);
 	}
 
@@ -41,7 +41,7 @@ public class MapperExample {
 		return !name.equals("Sam");
 	}
 
-	static class User {
+	private static class User {
 
 		private String name;
 		private Integer age = (int) (Math.random() * 100);
@@ -49,14 +49,6 @@ public class MapperExample {
 		public User(String name) {
 			super();
 			this.name = name;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public Integer getAge() {
-			return age;
 		}
 
 		@Override

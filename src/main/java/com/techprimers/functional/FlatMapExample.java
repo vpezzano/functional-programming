@@ -3,6 +3,7 @@ package com.techprimers.functional;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class FlatMapExample {
@@ -16,12 +17,12 @@ public class FlatMapExample {
 		// As map returns a stream, hereafter result will be a Stream of Streams
 		Stream<Stream<String>> result = users.stream().map(user -> user.getPhoneNumbers().stream());
 		System.out.println("Result: " + result);
-		
+
 		Optional<String> found = users.stream().flatMap(user -> user.getPhoneNumbers().stream())
 				.filter(number -> number.equals("0711272953")).findAny();
 
 		if (found.isPresent()) {
-			System.out.println(found.get());
+			System.out.println("Found: " + found.get());
 		}
 
 		// We can filter also while flattening
@@ -30,18 +31,25 @@ public class FlatMapExample {
 				.findAny();
 
 		if (found.isPresent()) {
-			System.out.println(found.get());
+			System.out.println("Found: " + found.get());
 		}
-		
-		users.stream().map(user -> user.getPhoneNumbers().stream())
+
+		found = users.stream().map(user -> user.getPhoneNumbers().stream())
 				.flatMap(stringStream -> stringStream.filter(number -> number.equals("0711272953"))).findAny();
 
 		if (found.isPresent()) {
-			System.out.println(found.get());
+			System.out.println("Found: " + found.get());
+		}
+		
+		found = users.stream().map(user -> user.getPhoneNumbers().stream()).flatMap(Function.identity())
+				.filter(number -> number.equals("0711272953")).findAny();
+
+		if (found.isPresent()) {
+			System.out.println("Found: " + found.get());
 		}
 	}
 
-	static class User {
+	private static class User {
 
 		private String name;
 		private Integer age;
@@ -53,28 +61,8 @@ public class FlatMapExample {
 			this.phoneNumbers = phoneNumbers;
 		}
 
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public Integer getAge() {
-			return age;
-		}
-
-		public void setAge(Integer age) {
-			this.age = age;
-		}
-
 		public List<String> getPhoneNumbers() {
 			return phoneNumbers;
-		}
-
-		public void setPhoneNumbers(List<String> phoneNumbers) {
-			this.phoneNumbers = phoneNumbers;
 		}
 
 		@Override
